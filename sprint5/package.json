@@ -1,0 +1,31 @@
+{
+  "name": "sdt-sprint5",
+  "version": "1.0.0",
+  "description": "Sistema Distribuido P2P - Sprint 5 (base Sprint 1+2+3 + commit por maioria + indexacao hnswlib)",
+  "type": "module",
+  "main": "src/leader.js",
+  "scripts": {
+    "leader": "node src/leader.js",
+    "peer": "node src/peer.js"
+  },
+  "license": "UNLICENSED",
+  "dependencies": {
+    "@chainsafe/libp2p-gossipsub": "^14.0.0",
+    "@chainsafe/libp2p-noise": "^16.0.0",
+    "@chainsafe/libp2p-yamux": "^7.0.0",
+    "@huggingface/transformers": "^3.0.0",
+    "@libp2p/identify": "^3.0.0",
+    "@libp2p/kad-dht": "^16.4.2",
+    "@libp2p/ping": "^2.0.0",
+    "@libp2p/tcp": "^10.0.0",
+    "@multiformats/multiaddr": "^12.0.0",
+    "express": "^4.19.2",
+    "kubo-rpc-client": "^5.0.2",
+    "libp2p": "^2.0.0",
+    "multer": "^2.0.0",
+    "hnswlib-node": "^3.0.0"
+  },
+  "overrides": {
+    "sharp": "^0.35.3"
+  }
+}

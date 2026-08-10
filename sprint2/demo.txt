@@ -1,0 +1,28 @@
+DEMO SPRINT 2
+Mostra: instalacao IPFS + API de submissao + routing entre peers (Sprint 1) e
+atualizacao/propagacao do vetor de documentos com embeddings (Sprint 2).
+
+Pre-requisito: IPFS Desktop aberto (ou "ipfs daemon" a correr).
+
+T1 (lider)
+cd sprint2
+npm install
+npm run leader
+
+T2 (peer1) - so depois de T1 mostrar "API REST pronta"
+cd sprint2
+$env:PEER_LABEL="peer1"; node src/peer.js
+
+T3 (peer2)
+cd sprint2
+$env:PEER_LABEL="peer2"; node src/peer.js
+
+T4 (cliente) - so depois de T2 e T3 mostrarem "Ligado ao lider"
+cd sprint2
+"Documento de teste" | Out-File -Encoding utf8 doc.txt
+curl.exe -F "file=@doc.txt" http://localhost:8000/upload
+
+Resultado esperado:
+- T1 mostra "Broadcast enviado" a cada 5s (routing)
+- T2 e T3 mostram as mensagens de broadcast e depois
+  "Proposta recebida: v1, CID=..., vetor com 1 CIDs, embeddings dim=384"

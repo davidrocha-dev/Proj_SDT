@@ -1,0 +1,31 @@
+DEMO SPRINT 3
+Mostra: peer verifica conflito de versao, calcula hash do vetor de CIDs e
+confirma ao lider (que valida e regista os hashes recebidos).
+
+Pre-requisito: IPFS Desktop aberto (ou "ipfs daemon" a correr).
+
+T1 (lider)
+cd sprint3
+npm install
+npm run leader
+
+T2 (peer1) - so depois de T1 mostrar "API REST pronta"
+cd sprint3
+$env:PEER_LABEL="peer1"; node src/peer.js
+
+T3 (peer2)
+cd sprint3
+$env:PEER_LABEL="peer2"; node src/peer.js
+
+T4 (cliente) - so depois de T2 e T3 mostrarem "Ligado ao lider"
+cd sprint3
+"Documento de teste" | Out-File -Encoding utf8 doc.txt
+curl.exe -F "file=@doc.txt" http://localhost:8000/upload
+
+Resultado esperado (1a submissao, v1):
+- T2 e T3 mostram "Proposta v1 aceite ... Hash=... enviada ao lider"
+- T1 mostra "Confirm recebido de peer1/peer2 para v1: ... [hash OK]"
+
+Para ver deteccao de CONFLITO (proposital, esperado nesta fase - so ha commit no
+Sprint 5), repete o curl do T4 uma segunda vez:
+- T2 e T3 mostram (no stderr) "CONFLITO de versao ... esperava v1, recebi v2"

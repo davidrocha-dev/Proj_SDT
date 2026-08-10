@@ -1,0 +1,39 @@
+DEMO FINAL
+Mostra: fluxo completo RF1 (submissao -> proposta -> confirmacao -> maioria ->
+commit -> indexacao hnswlib) + deteccao de falha do lider (RNF3 parte 1).
+
+Pre-requisitos:
+- IPFS Desktop aberto (ou "ipfs daemon" a correr)
+- Python 3 + Visual Studio Build Tools (C++ e Windows SDK) instalados,
+  necessarios so na 1a instalacao para compilar o hnswlib-node
+
+T1 (lider)
+cd final
+npm install
+npm run leader
+
+T2 (peer1) - so depois de T1 mostrar "API REST pronta"
+cd final
+$env:PEER_LABEL="peer1"; node src/peer.js
+
+T3 (peer2)
+cd final
+$env:PEER_LABEL="peer2"; node src/peer.js
+
+T4 (cliente) - so depois de T2 e T3 mostrarem "Ligado ao lider"
+cd final
+"Documento de teste" | Out-File -Encoding utf8 doc.txt
+curl.exe -F "file=@doc.txt" http://localhost:8000/upload
+
+Resultado esperado (v1):
+- T1 mostra "Confirm recebido de peer1/peer2 ..." e depois
+  "Maioria atingida para v1 (2/2 peers estimados)" e "COMMIT v1 enviado"
+- T2 e T3 mostram "COMMIT v1 aplicado ... Indexado no hnswlib (label=0, total=1)"
+
+Repete o curl do T4 (2a submissao) para veres v2 a funcionar em sequencia
+(label=1, total=2).
+
+DEMO da deteccao de falha do lider (RNF3 parte 1):
+- Com T1, T2 e T3 a correr, fecha/mata o processo do lider (T1)
+- Espera ~13 segundos
+- T2 e T3 mostram (no stderr) "FALHA DO LIDER DETETADA: sem heartbeat ha 13s (limite=12s)"
